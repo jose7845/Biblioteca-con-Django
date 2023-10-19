@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-md bg-dark" data-bs-theme="dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">Catalogo</a>
+
+        <button 
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbar"
+            aria-controls="navbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a href="navbar-link {% if request.resolver_math.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Inicio</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a 
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            {{ user.username | capfirst }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesion</a>
+                            </li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a  class="nav-link {% if request.resolver_match.url_name == 'register' %}active{% endif  %}"
+                        href="{% url 'login' %}">Ingresar</a>
+                    </li>
+                    <li>
+                        <a  class="nav-link {% if request.resolver_match.url_name == 'register' %}active{% endif  %}"
+                        href="{% url 'register' %}">Registrarse</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
